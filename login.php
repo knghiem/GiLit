@@ -1,22 +1,22 @@
 <?php
     session_start();
     $message = "";
-    if( !empty($_POST["username"]) ){
+    if( !empty($_POST["email"]) ){
         $db_conn = mysqli_connect("localhost", "root", "");
         mysqli_select_db($db_conn, "gilit_db");
-      
-        $user = mysqli_real_escape_string($db_conn, $_POST['username']);
+
+        $email = mysqli_real_escape_string($db_conn, $_POST['email']);
         $pass = mysqli_real_escape_string($db_conn, $_POST['password']);
 
-        $cmd = "SELECT user_id FROM users WHERE username='$user' AND password='$pass'";
+        $cmd = "SELECT * FROM users WHERE email='$email' AND password='$pass'";
         $result = mysqli_query($db_conn, $cmd);
         $row = mysqli_fetch_array($result);
         if($row != null && mysqli_num_rows($result)==1){
-            $_SESSION['active'] = $user;
+            $_SESSION['active'] = $email;
             header("location: community_board.php");
         }
         else
-            $message = "Username or Password is invalid";
+            $message = $email."Email or Password is invalid".$pass;
     }
 ?>
 <!DOCTYPE html>
@@ -34,7 +34,7 @@
     <div>
         <h2>We've been missing you!</h2>
         <form action="login.php" method="post">
-            <span class="glyphicon glyphicon-user"></span><input type="text" id="username" name="username" placeholder="Username" /><br><br>
+            <span class="glyphicon glyphicon-user"></span><input type="text" id="email" name="email" placeholder="Email" /><br><br>
             <span class="glyphicon glyphicon-lock"></span><input type="password" id="password" name="password" placeholder="Password" />
             <br><br><button type="submit" class="btn btn-primary">Login</button>
         </form>
