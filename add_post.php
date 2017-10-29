@@ -13,6 +13,12 @@
         $des = $_POST["des"];
         $point = $_POST["point"];
 				$wellness = $_POST["wellness"];
+				if ($wellness)
+					$wellness = 1;
+				else
+				 	$wellness = 0;
+				$lat = $_POST["lat"];
+				$lng = $_POST["lng"];
 
         $email = $_SESSION['active'];
 
@@ -34,8 +40,8 @@
 						if ($user_point < $point && $wellness!=true)
 							echo "Not enough points";
 						else{
-		            $cmd2 = "INSERT INTO posts (com_id, title, des, getter_id, post_point) VALUES
-		                (".$com_id.", '".$title."', '".$des."', ".$user_id.", ".$point.")
+		            $cmd2 = "INSERT INTO posts (com_id, title, des, getter_id, post_point, post_lat, post_long, wellness) VALUES
+		                (".$com_id.", '".$title."', '".$des."', ".$user_id.", ".$point.", ".$lat.", ".$lng.", ".$wellness.")
 		                ;";
 
 		            if( mysqli_query($db_conn, $cmd2) )
