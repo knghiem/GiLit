@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <!-- Demonstrates how to add a user to an existing database
 Take input from users:
-    2. Display Name
-    3. Email address
-    4. username unique
-    5. password
-
 AngularJS code from https://goo.gl/JPxqkc
 -->
 <html ng-app="validation">
