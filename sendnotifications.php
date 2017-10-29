@@ -20,19 +20,21 @@
 
     // Step 2: set our AccountSid and AuthToken from https://twilio.com/console
 
-    	session_start();
-    	if(!isset($_SESSION['active'])){
-    		header("Location: login.php");  //  back to login page
-    	}
-    	$db_conn = mysqli_connect("localhost", "root", "");
-    	mysqli_select_db($db_conn, "gilit_db");
-
-        if( !empty($_POST["title"]) && !empty($_POST["point"])){
+        if( !empty($_POST["title"])){
             $title = $_POST["title"];
             $des = $_POST["des"];
-            $point = $_POST["point"];
+            $email = $_POST["email"];
+            $lat = $_POST["lat"];
+            $lng = $_POST["lng"];
 
-            $email = $_SESSION['active'];
+            $location_msg = "Contact the sender for info for the location.";
+
+            if ($lat && $lng) {
+              $url = "https://www.google.com/maps/search/?api=1&query=".$lat.",".$lng."";
+              $location_msg = "Go to this link for direct to the sent location: ".$url;
+            }
+
+
 
             // OPEN AND SELECT DATABASE
             $db_conn = mysqli_connect("localhost", "root", "");
@@ -61,7 +63,7 @@
                 while($row2 = mysqli_fetch_array($result2)){
                     if ($row2["email"] != $email){
                       $name = $row2["name"];
-                      $number = $row2["number"];
+                      $number = $row2["phone"];
                       $people[$number] = $name;
                     }
                 }
@@ -70,6 +72,10 @@
                 echo '<p>No one to message</p>';
 
             mysqli_close($db_conn);
+          }
+          else
+            echo mysqli_error($db_conn);
+
 
 
     $AccountSid = "AC1316b1c2d5b02bee7fdccb555b43aa30";
@@ -80,10 +86,11 @@
 
     // Step 4: Array of people to send message to
      //user phone number who posted
-
+     $people = array(
+         "+12037277793" => "Arjun",
+     );
     // Step 5: loop over the people who will receive the message
     foreach ($people as $number => $name) {
-        $number = "+1".(string)$number;
         $sms = $client->account->messages->create(
 
             // the number the messsage is being sent to
@@ -91,7 +98,7 @@
             array(
                 'from' => "+16315460584", //twilio_num - user who commited
                 // the sms body
-                'body' => "GiLit well-ness message from ".$getter_name.": ".$des." Please message back at: ".$getter_phone." as soon as possible."  //user_message
+                'body' => "GiLit well-ness message from ".$getter_name.": ".$des." Sender: ".$getter_phone." as soon as possible.".$location_msg  //user_message
             )
         );
         // Display a confirmation message on the screen
