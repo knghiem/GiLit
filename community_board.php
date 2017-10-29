@@ -32,24 +32,24 @@
     <a href="index.html" class="btn btn-primary right" role="button">Home</a>
     <?php
         $username = $_SESSION['active'];
-    
+
         // OPEN AND SELECT DATABASE
         $db_conn = mysqli_connect("localhost", "root", "");
         if (!$db_conn)
           die("Unable to connect: " . mysqli_connect_error());
         mysqli_select_db($db_conn, "gilit_db");
-        
+
         //look for the com_id of the user
         $cmd  = "SELECT * from users where username='".$username."'";
         $result = mysqli_query($db_conn, $cmd);
-        
+
         //check that the id exists
         if (mysqli_num_rows($result)==1){
             while($row = mysqli_fetch_array($result)){
                 //assign com_id to the com_id of the user
                 $com_id = $row['com_id'];
                 $user_point = $row['point'];
-                
+
                 if ($com_id!=NULL){
                     $cmd1  = "SELECT com_name from coms where com_id=".$com_id."";
                         $result1 = mysqli_query($db_conn, $cmd1);
@@ -60,10 +60,10 @@
                                 echo "<p>Your currently have <b>".$user_point."</b> points</p>";
                             }
                         }
-                    
+
                     if ($user_point >0)
                         echo '<button id="add" type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Add new posts</button>';
-                    
+
                     //look for all the posts in the community board
                     $cmd  = "SELECT * from posts where com_id=".$com_id."";
 
@@ -96,7 +96,7 @@
 
                             echo '<span>Points: '.$row['point'].'</span></p>';
 
-                            //if the current user is not the getter of this help post, then allow them to commit 
+                            //if the current user is not the getter of this help post, then allow them to commit
                             if ($username!=$getter_username && $row['status']!=2){
                                 echo "<input type ='submit' value = 'Commit' id = '".$row['help_id']."' class='btn btn-success btn-xs commit'>";
                             }
@@ -125,37 +125,39 @@
         }
         else
             echo 'Database error.';
-        
+
         mysqli_close($db_conn);
     ?>
 
     <div id="addPost">
         <h4>Add a new post to the community board</h4>
         <form>
+						<div class="form-group">
+								<input type="radio" name="wellness" id="wellness"><span style="padding-left: 10px">Well-ness Issue</span><br>
+						</div>
             <div class="form-group">
                 <br>
-                *Required
+                *Required Title
                 <input class="form-control" type="text" name="title" placeholder="A short title" required>
             </div>
-            
-            <div class="form-group">    
+            <div class="form-group"> Description
                 <input class="form-control" type="text" name="des" placeholder="Description" required>
             </div>
-            *Required
-            <div class="form-group">    
+            *Required Points
+            <div class="form-group">
                 <input class="form-control" type="number" name="point" placeholder="Points" required>
             </div>
             <button id='newPost' class='btn btn-default'>Submit</button>
         </form>
     </div>
-    
+
     <script>
         $(document).ready(function(){
             var show = false;
             $('#addPost').hide();
-            
+
             //jQuery code taken from here: https://goo.gl/jPFgub
-            
+
             $('.commit').click(function(){
                 var help_id = parseInt($(this).attr('id'));
                 var button = $(this);
@@ -166,7 +168,7 @@
                     button.hide();
                 });
             });
-            
+
             $('#add').click(function(){
                 if (show){
                     $('#addPost').hide();
@@ -176,9 +178,9 @@
                     $('#addPost').show();
                     show = true;
                     window.location = "#addPost"
-                }   
+                }
             });
-            
+
             $("#newPost").click(function(){
                 var $form = $("#postForm");
                 var url = "add_post.php";
@@ -194,6 +196,6 @@
         });
     </script>
 
-    
+
 </body>
 </html>
