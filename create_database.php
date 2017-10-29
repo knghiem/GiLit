@@ -153,16 +153,16 @@ IV. A table of posts
 					echo mysqli_error($db_conn);
 
         //III.1 Insert the first user into the database
-        $cmd_user = "INSERT INTO users (name, email, password, phone, com_id, role, point) VALUES
-                           ('Khanh Nghiem', 'knghiem@conncoll.edu', 'ChangeThis', 8607018860, 1, 'admin', 1000),
-                           ('Atish Patel', 'atish.patel95@yahoo.com', 'password', 7703612418, 2, 'admin', 2000),
-                           ('Arjun Athreya', 'arjun.r.athreya@gmail.com', 'password', 2032712335, 3, 'admin', 1000),
-                           ('Jane Doe', 'janedoe@gmail.com', 'password', 1111111111, 4, 'user', 1000),
-                           ('Arnold roll', 'ati00@yahoo.com', 'password', 7803600418, 5, 'admin', 2000),
-                           ('Bam Adebayo', 'bam@yahoo.com', 'password', 2032712334, 1, 'admin', 2000),
-                           ('John Collins', 'jc@yahoo.com', 'password', 9997775555, 2, 'admin', 2000),
-                           ('Jason Tatum', 'jason.tatum@yahoo.com', 'password', 1987237892, 5, 'admin', 2000),
-                           ('Markelle Fultz', 'mfultz@gmail.com', 'password', 1234567890, 3, 'user', 1000);";
+        $cmd_user = "INSERT INTO users (name, email, password, phone, com_id, role, point, point_accrue) VALUES
+                           ('Khanh Nghiem', 'knghiem@conncoll.edu', 'ChangeThis', 8607018860, 1, 'admin', 1000, 1000),
+                           ('Atish Patel', 'atish.patel95@yahoo.com', 'password', 7703612418, 2, 'admin', 2000, 2000),
+                           ('Arjun Athreya', 'arjun.r.athreya@gmail.com', 'password', 2032712335, 3, 'admin', 1000, 1000),
+                           ('Jane Doe', 'janedoe@gmail.com', 'password', 1111111111, 4, 'user', 1000, 1000),
+                           ('Arnold roll', 'ati00@yahoo.com', 'password', 7803600418, 5, 'admin', 2000, 2000),
+                           ('Bam Adebayo', 'bam@yahoo.com', 'password', 2032712334, 1, 'admin', 2000, 2000),
+                           ('John Collins', 'jc@yahoo.com', 'password', 9997775555, 2, 'admin', 2000, 2000),
+                           ('Jason Tatum', 'jason.tatum@yahoo.com', 'password', 1987237892, 5, 'admin', 2000, 2000),
+                           ('Markelle Fultz', 'mfultz@gmail.com', 'password', 1234567890, 3, 'user', 1000, 1000);";
 /*comid: Connecticut College 1
 */
 /*user_id int(11) PRIMARY KEY UNIQUE NOT NULL AUTO_INCREMENT,
