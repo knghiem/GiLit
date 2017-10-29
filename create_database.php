@@ -118,7 +118,7 @@ IV. A table of posts
 				   wellness  TINYINT(1) NULL,
 				   post_lat  VARCHAR(45) NULL,
 				   post_long  VARCHAR(45) NULL,
-				   giver_id VARCHAR(45) NULL,
+				   giver_id INT(11) NULL,
 					 getter_id INT(11) NULL,
 				   com_id   INT(11),
 				   cat_id   INT(11),
