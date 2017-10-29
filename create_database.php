@@ -2,34 +2,7 @@
 <!--
 Code from Professor Izmirli
 Create a database using PHP. Run first to prepare the database
-
-I. A table of users:
-    1. user_id int(11) primary key not null auto_increment - user id to reference in the system
-    2. name var char not null - Display name
-    3. email var char not null - email address
-    4. username var char 10 unique not null - user name to log in
-    5. password var char 20 not null - log in password
-    6. com_id int(11) DEFAULT NULL - the id of the user's community
-    7. role set('admin','user') DEFAULT user - the role of the user, the admin of the database has to go in and change this
-    8. points int(11) not null DEFAULT 0 - the available points of the user
-
-II. A table of communities:
-    1. com_id int(11) primary key not null auto_increment - user id to reference in the system
-    2. name var char not null - name of the community
-    3. admin_id var char not null - user_id of the admin
-    4. com_lat decimal(15,10) - the latitude of the community
-    5. com_long decimal(15,10) - the longitude of the community
-
-III. Load the first user and community into the database
-
-IV. A table of posts
-    1. help_id int(11) primary key not null auto_increment
-    2. com_id int(11) the id of the community
-    3. title var char 100 - title of the request, max 100 character
-    4. des medium text - full des, max 16777215 characters
-    5. get_id int (11) not null - id of the getter
-    6. give_id int (11) default null - id of the giver
-    7. status tinyint(1) default 0 - status of the request, 0 = no commitment, 1 = committed, 2 = completed
+status tinyint(1) default 0 - status of the request, 0 = no commitment, 1 = committed, 2 = completed
 */-->
 
 <html>
@@ -153,14 +126,14 @@ IV. A table of posts
 					echo mysqli_error($db_conn);
 
         //III.1 Insert the first user into the database
-        $cmd_user = "INSERT INTO users (name, email, password, phone, com_id, role, point, point_accrue) VALUES
-                           ('Khanh Nghiem', 'knghiem@conncoll.edu', 'ChangeThis', 8607018860, 1, 'admin', 1000, 1000),
-                           ('Atish Patel', 'atish.patel95@yahoo.com', 'password', 7703612418, 2, 'admin', 2000, 2000),
-                           ('Arjun Athreya', 'arjun.r.athreya@gmail.com', 'password', 2032712335, 3, 'admin', 1000, 1000),
-                           ('Jane Doe', 'janedoe@gmail.com', 'password', 1111111111, 4, 'user', 1000, 1000),
+				$cmd_user = "INSERT INTO users (name, email, password, phone, com_id, role, point, point_accrue) VALUES
+                           ('Khanh Nghiem', 'knghiem@conncoll.edu', 'ChangeThis', 8607018860, 1, 'admin', 15000, 15000),
+                           ('Atish Patel', 'atish.patel95@yahoo.com', 'password', 7703612418, 2, 'admin', 12000, 12000),
+                           ('Arjun Athreya', 'arjun.r.athreya@gmail.com', 'password', 2032712335, 3, 'admin', 14000, 14000),
+                           ('Jane Doe', 'janedoe@gmail.com', 'password', 1111111111, 4, 'user', 10000, 10000),
                            ('Arnold roll', 'ati00@yahoo.com', 'password', 7803600418, 5, 'admin', 2000, 2000),
-                           ('Bam Adebayo', 'bam@yahoo.com', 'password', 2032712334, 1, 'admin', 2000, 2000),
-                           ('John Collins', 'jc@yahoo.com', 'password', 9997775555, 2, 'admin', 2000, 2000),
+                           ('Bam Adebayo', 'bam@yahoo.com', 'password', 2032712334, 1, 'admin', 6000, 6000),
+                           ('John Collins', 'jc@yahoo.com', 'password', 9997775555, 2, 'admin', 9000, 9000),
                            ('Jason Tatum', 'jason.tatum@yahoo.com', 'password', 1987237892, 5, 'admin', 2000, 2000),
                            ('Markelle Fultz', 'mfultz@gmail.com', 'password', 1234567890, 3, 'user', 1000, 1000);";
 /*comid: Connecticut College 1
