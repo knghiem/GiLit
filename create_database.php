@@ -65,15 +65,15 @@ IV. A table of posts
 		if (!$db_conn)
 			die("Unable to connect: " . mysqli_connect_error());
         //I. Creating the user table
-				if (mysqli_query($db_conn, "CREATE DATABASE mydb;"))
+				if (mysqli_query($db_conn, "CREATE DATABASE gilit_db;"))
 							echo "Database ready<br><br>";
 						else
 							echo "Unable to create database: " . mysqli_error($db_conn) . "<br>";
-						mysqli_select_db($db_conn, "mydb");
+						mysqli_select_db($db_conn, "gilit_db");
 
 				$cmd ="CREATE TABLE IF NOT EXISTS coms (
 					com_id int(11) PRIMARY KEY UNIQUE NOT NULL AUTO_INCREMENT,
-					com_name varchar(60) NULL);";
+					com_name varchar(60) UNIQUE NOT NULL);";
 
 				if(mysqli_query($db_conn, $cmd))
 					echo "Success<br>";
@@ -85,11 +85,11 @@ IV. A table of posts
 				   point int(11) NULL DEFAULT 0,
            point_accrue int(11) NULL DEFAULT 0,
 				   name VARCHAR(45) NOT NULL,
-           email VARCHAR(45) NOT NULL,
+           email VARCHAR(45) UNIQUE NOT NULL,
            password VARCHAR(45) NOT NULL,
 				   tier INT(11) NULL DEFAULT 0,
 				   badges INT(11) NULL DEFAULT 0,
-				   phone INT(11)  NOT NULL,
+				   phone INT(11) NOT NULL,
            role VARCHAR(45) NOT NULL,
 				   rating tinyint(5) NULL DEFAULT 5,
 				   com_id INT(11),
@@ -122,6 +122,7 @@ IV. A table of posts
 					 getter_id INT(11) NULL,
 				   com_id   INT(11),
 				   cat_id   INT(11),
+					 status   TINYINT(5) DEFAULT 0,
 				  INDEX  post_id_UNIQUE  ( post_id  ASC),
 				  INDEX  fk_posts_users1_idx  ( getter_id  ASC,  com_id  ASC),
 				  INDEX  fk_posts_postcats1_idx  ( cat_id  ASC),
@@ -152,17 +153,16 @@ IV. A table of posts
 					echo mysqli_error($db_conn);
 
         //III.1 Insert the first user into the database
-        $cmd = "INSERT INTO users (name, email, password, phone, com_id, role, point) VALUES
+        $cmd_user = "INSERT INTO users (name, email, password, phone, com_id, role, point) VALUES
                            ('Khanh Nghiem', 'knghiem@conncoll.edu', 'ChangeThis', 8607018860, 1, 'admin', 1000),
                            ('Atish Patel', 'atish.patel95@yahoo.com', 'password', 7703612418, 2, 'admin', 2000),
-                           ('Arjun Athreya', 'arjun.r.athreya@gmail.com', 'password', 2032712334, 3, 'admin', 1000),
-                           ('Jane Doe', 'janedoe@gmail.com', 'password', '1111111111', 4, 'user', 1000),
-                           ('Arnold roll', 'atish.patel95@yahoo.com', 'password', 7803600418, 5, 'admin', 2000),
-                           ('Bam Adebayo', 'bam@yahoo.com', 'password', 1112223333, 1, 'admin', 2000),
+                           ('Arjun Athreya', 'arjun.r.athreya@gmail.com', 'password', 2032712335, 3, 'admin', 1000),
+                           ('Jane Doe', 'janedoe@gmail.com', 'password', 1111111111, 4, 'user', 1000),
+                           ('Arnold roll', 'ati00@yahoo.com', 'password', 7803600418, 5, 'admin', 2000),
+                           ('Bam Adebayo', 'bam@yahoo.com', 'password', 2032712334, 1, 'admin', 2000),
                            ('John Collins', 'jc@yahoo.com', 'password', 9997775555, 2, 'admin', 2000),
-                           ('Jason Tatum', 'jason.tatum@yahoo.com', 'password', 19872347892, 5, 'admin', 2000),
-                           ('Markelle Fultz', 'mfultz@gmail.com', 'password', 1234567890, 3, 'user', 1000)
-                           ;";
+                           ('Jason Tatum', 'jason.tatum@yahoo.com', 'password', 1987237892, 5, 'admin', 2000),
+                           ('Markelle Fultz', 'mfultz@gmail.com', 'password', 1234567890, 3, 'user', 1000);";
 /*comid: Connecticut College 1
 */
 /*user_id int(11) PRIMARY KEY UNIQUE NOT NULL AUTO_INCREMENT,
@@ -177,7 +177,7 @@ IV. A table of posts
 				   rating VARCHAR(45) NULL DEFAULT '5',
 				   com_id INT(11),*/
 
-        if( mysqli_query($db_conn, $cmd) )
+        if( mysqli_query($db_conn, $cmd_user) )
 						echo "User mock database success<br><br>";
 				else
 						echo mysqli_error($db_conn);
@@ -215,9 +215,6 @@ IV. A table of posts
 */
 
         //IV.2 Insert the first posts
-        $des1 = "Shain Library is looking for book donations, preferrably books in good conditions. Please come to Blue Camel Coffee and drop off your old books. Your kindness is greatly appreciated. Thank you.";
-
-        $des2 = "The Office of Community Engagement is looking for volunteers to teach languages, music, and sports for the New London Public High School. Sign up for the emailing list and get points. Based on your commitment with the office, points will be adminstered by the admin of the college community.";
 
         $cmd = "INSERT INTO posts (title, des, wellness, post_point, getter_id, com_id, cat_id) VALUES
                 ('Donate a book to Shain Library', 'Donate any book to the library', 1, 1000, 2, 2, 8),
